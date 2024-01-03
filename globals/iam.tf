@@ -29,9 +29,15 @@ output "all_user_names" {
 
 
 module "users" {
-  source = "git::https://github.com/Kohei-Suzuki22/detailed-explanation-terraform3-modules.git//iam?ref=v1.0.1"
+  source = "git::https://github.com/Kohei-Suzuki22/detailed-explanation-terraform3-modules.git//iam?ref=v1.0.2"
 
   count = length(var.user_names)
   user_name = var.user_names[count.index]
   
+}
+
+
+# ここでは、module "users"がcount数分存在していることになるため、module.users[*]で全件数にアクセスする
+output "module_user_names" {
+  value = module.users[*].module_user_name
 }
