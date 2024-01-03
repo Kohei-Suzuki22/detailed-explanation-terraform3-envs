@@ -24,3 +24,14 @@ output "all_user_names" {
   value = aws_iam_user.example[*].name
   
 }
+
+
+
+
+module "users" {
+  source = "git::https://github.com/Kohei-Suzuki22/detailed-explanation-terraform3-modules.git//iam?ref=v1.0.1"
+
+  count = length(var.user_names)
+  user_name = var.user_names[count.index]
+  
+}
