@@ -1,5 +1,5 @@
 module "servers" {
-  source = "git::https://github.com/Kohei-Suzuki22/detailed-explanation-terraform3-modules.git//servers?ref=v1.0.0"
+  source = "git::https://github.com/Kohei-Suzuki22/detailed-explanation-terraform3-modules.git//servers?ref=v1.0.4"
 
   cluster_name = "staging"
   remote_state_bucket = "detailed-explanation-terraform"
