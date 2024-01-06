@@ -21,10 +21,46 @@ output "first_user_name" {
 
 # count数分の全リソースを取得する。(配列で返す。)
 output "all_user_names" {
-  value = aws_iam_user.example[*].name
-  
+  value = aws_iam_user.example[*].name 
 }
 
+// -> outputの結果は以下の感じ。resourceの配列ができる。
+# user_name_count = [
+#   {
+#     "arn" = "arn:aws:iam::095962396456:user/neo-neo"
+#     "force_destroy" = false
+#     "id" = "neo-neo"
+#     "name" = "neo-neo"
+#     "path" = "/"
+#     "permissions_boundary" = ""
+#     "tags" = tomap({})
+#     "tags_all" = tomap({})
+#     "unique_id" = "AIDARMV6N64UGRIF3SQKM"
+#   },
+#   {
+#     "arn" = "arn:aws:iam::095962396456:user/neo-trinity"
+#     "force_destroy" = false
+#     "id" = "neo-trinity"
+#     "name" = "neo-trinity"
+#     "path" = "/"
+#     "permissions_boundary" = ""
+#     "tags" = tomap({})
+#     "tags_all" = tomap({})
+#     "unique_id" = "AIDARMV6N64UHWQK46PDP"
+#   },
+#   {
+#     "arn" = "arn:aws:iam::095962396456:user/neo-morpheus"
+#     "force_destroy" = false
+#     "id" = "neo-morpheus"
+#     "name" = "neo-morpheus"
+#     "path" = "/"
+#     "permissions_boundary" = ""
+#     "tags" = tomap({})
+#     "tags_all" = tomap({})
+#     "unique_id" = "AIDARMV6N64UJXK4LVH56"
+#   },
+# ]
+//
 
 
 
@@ -40,4 +76,9 @@ module "users" {
 # ここでは、module "users"がcount数分存在していることになるため、module.users[*]で全件数にアクセスする
 output "module_user_names" {
   value = module.users[*].module_user_name
+}
+
+output "user_name_count" {
+  value = aws_iam_user.example
+  
 }
