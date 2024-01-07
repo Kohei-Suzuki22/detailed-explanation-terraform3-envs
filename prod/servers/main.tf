@@ -1,5 +1,5 @@
 module "servers" {
-  source = "git::https://github.com/Kohei-Suzuki22/detailed-explanation-terraform3-modules.git//servers?ref=v1.2.0"
+  source = "git::https://github.com/Kohei-Suzuki22/detailed-explanation-terraform3-modules.git//servers?ref=v1.2.1"
   # source = "../../../modules/servers"
 
   cluster_name = "prod"
