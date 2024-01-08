@@ -8,7 +8,7 @@ variable "user_names" {
 
 # length分の要素数だけループを回す。
 # count.indexは、ループしている配列数を返す。
-resource "aws_iam_user" "example" {
+resource "aws_iam_user" "count-example" {
   count = length(var.user_names)
   name = "neo-${var.user_names[count.index]}"
   
@@ -16,12 +16,12 @@ resource "aws_iam_user" "example" {
 
 # countの0番目を取得する。
 output "first_user_name" {
-  value = aws_iam_user.example[0].name
+  value = aws_iam_user.count-example[0].name
 }
 
 # count数分の全リソースを取得する。(配列で返す。)
 output "all_user_names" {
-  value = aws_iam_user.example[*].name 
+  value = aws_iam_user.count-example[*].name 
 }
 
 // -> outputの結果は以下の感じ。resourceの配列ができる。
@@ -79,7 +79,7 @@ output "module_user_names" {
 }
 
 output "user_name_count" {
-  value = aws_iam_user.example
+  value = aws_iam_user.count-example
   
 }
 
@@ -128,7 +128,7 @@ variable "give_neo_cloudwatch_full_access_policy" {
 resource "aws_iam_user_policy_attachment" "give_neo_cloudwatch_read_only" {
   count = var.give_neo_cloudwatch_full_access_policy ? 0 : 1
 
-  user = aws_iam_user.example[0].name
+  user = aws_iam_user.count-example[0].name
   policy_arn = aws_iam_policy.cloudwatch_read_only.arn
 }
 
@@ -137,11 +137,16 @@ resource "aws_iam_user_policy_attachment" "give_neo_cloudwatch_full_access" {
   count = var.give_neo_cloudwatch_full_access_policy ? 1 : 0
 
 
-  user = aws_iam_user.example[0].name
+  user = aws_iam_user.count-example[0].name
   policy_arn = aws_iam_policy.cloudwatch_full_access.arn
 }
 
 output "neo_cloudwatch_policy_arn" {
   value = one(concat(aws_iam_user_policy_attachment.give_neo_cloudwatch_full_access[*].policy_arn, aws_iam_user_policy_attachment.give_neo_cloudwatch_read_only[*].policy_arn))
   
+}
+
+moved {
+  from = aws_iam_user.count
+  to = aws_iam_user.count-example
 }
