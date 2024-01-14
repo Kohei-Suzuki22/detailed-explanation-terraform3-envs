@@ -23,12 +23,27 @@ provider "aws" {
 
 provider "aws" {
   region = "ap-northeast-1"
-  alias = "ap-northeast-1"
+  alias = "tokyo"
 
   default_tags {
     tags = {
-      Owner = "team-reagion-1"
+      Owner = "team-foo"
       ManagedBy = "terraform"
+      Region = "ap-northeast-1"
     }
-  }
+  }  
+}
+
+
+provider "aws" {
+  region = "us-west-2"
+  alias = "oregon"
+
+  default_tags {
+    tags = {
+      Owner = "team-foo"
+      ManagedBy = "terraform"
+      Region = "us-west-1"
+    }
+  }  
 }
