@@ -25,3 +25,14 @@ resource "aws_security_group_rule" "staging_alb_sg_ingress" {
   protocol = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
 }
+
+
+# ※本来、リージョンの違うリソースは別ディレクトリで管理すべきなので、このやり方はよろしくない。
+resource "aws_security_group" "web-server" {
+  provider = aws.ap-northeast-1
+  name = "region-1-web-server"
+  vpc_id = data.terraform_remote_state.globals.outputs.terraform_vpc_id
+  tags = {
+    "Name" : "region-1-web-server"
+  }
+}
